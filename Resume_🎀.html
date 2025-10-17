@@ -1,0 +1,886 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parag Sanjay Marathe - Tech Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-blue': '#00f5ff',
+                        'neon-purple': '#bf00ff',
+                        'neon-green': '#39ff14',
+                        'dark-bg': '#0a0a0a',
+                        'dark-card': '#1a1a1a',
+                    },
+                    fontFamily: {
+                        'tech': ['Orbitron', 'monospace'],
+                        'body': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'tilt': 'tilt 0.3s ease-out',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #00f5ff, #bf00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+        }
+        
+        .dark .neon-glow {
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+        }
+        
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(45deg, #00f5ff, #bf00ff);
+            transition: left 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            left: 0;
+        }
+        
+        .card-tilt {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .card-tilt:hover {
+            transform: rotateY(5deg) rotateX(5deg) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .dark .card-tilt:hover {
+            box-shadow: 0 20px 40px rgba(0, 245, 255, 0.1);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(0, 245, 255, 0.3); }
+            to { box-shadow: 0 0 30px rgba(191, 0, 255, 0.5); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .tech-grid {
+            background-image: 
+                linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        .hero-bg {
+            background: radial-gradient(circle at 20% 50%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, rgba(191, 0, 255, 0.1) 0%, transparent 50%),
+                       radial-gradient(circle at 40% 80%, rgba(57, 255, 20, 0.1) 0%, transparent 50%);
+        }
+        
+        .logo-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #00f5ff, #bf00ff, #39ff14);
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .logo-container:hover::before {
+            opacity: 1;
+        }
+        
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00f5ff, #bf00ff);
+            padding: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-image::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #00f5ff, #bf00ff, #39ff14, #00f5ff);
+            animation: spin 3s linear infinite;
+        }
+        
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .skill-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .skill-icon:hover {
+            transform: scale(1.2) rotate(5deg);
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+        
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #374151;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .theme-toggle.active {
+            background: linear-gradient(45deg, #00f5ff, #bf00ff);
+        }
+        
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-toggle.active::before {
+            transform: translateX(30px);
+        }
+    </style>
+</head>
+<body class="font-body bg-white dark:bg-dark-bg text-gray-900 dark:text-white transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/80 dark:bg-dark-bg/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="logo-container">
+                    <div class="font-tech font-black text-2xl bg-gradient-to-r from-neon-blue to-neon-purple bg-clip-text text-transparent">
+                        &lt;PM/&gt;
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 dark:text-gray-300 hover:text-neon-blue transition-colors">🏠 Home</a>
+                    <a href="#about" class="nav-link text-gray-700 dark:text-gray-300 hover:text-neon-blue transition-colors">👨‍💻 About</a>
+                    <a href="#skills" class="nav-link text-gray-700 dark:text-gray-300 hover:text-neon-blue transition-colors">💡 Skills</a>
+                    <a href="#projects" class="nav-link text-gray-700 dark:text-gray-300 hover:text-neon-blue transition-colors">🚀 Projects</a>
+                    <a href="#achievements" class="nav-link text-gray-700 dark:text-gray-300 hover:text-neon-blue transition-colors">🏆 Achievements</a>
+                    <a href="#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-neon-blue transition-colors">📩 Contact</a>
+                </div>
+                
+                <!-- Theme Toggle & Mobile Menu -->
+                <div class="flex items-center space-x-4">
+                    <div class="theme-toggle" id="themeToggle"></div>
+                    <button class="md:hidden text-gray-700 dark:text-gray-300">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden hero-bg tech-grid">
+        <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/10 dark:to-black/30"></div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 text-neon-blue opacity-30 animate-float">
+            <i class="fas fa-code text-4xl"></i>
+        </div>
+        <div class="absolute bottom-20 right-10 text-neon-purple opacity-30 animate-float" style="animation-delay: -2s;">
+            <i class="fas fa-shield-alt text-4xl"></i>
+        </div>
+        <div class="absolute top-1/2 left-20 text-neon-green opacity-30 animate-float" style="animation-delay: -4s;">
+            <i class="fas fa-brain text-3xl"></i>
+        </div>
+        
+        <div class="relative z-10 text-center px-4 max-w-6xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="fade-in">
+                    <h1 class="font-tech font-black text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight">
+                        PARAG SANJAY<br>
+                        <span class="gradient-text">MARATHE</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl mb-8 text-gray-600 dark:text-gray-300">
+                        Tech Enthusiast | Cybersecurity Explorer | Future Entrepreneur
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <button id="downloadResume" class="bg-gradient-to-r from-neon-blue to-neon-purple text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg hover:shadow-neon-blue/25 transition-all transform hover:scale-105 neon-glow">
+                            <i class="fas fa-download mr-2"></i>Download Resume
+                        </button>
+                        <button class="border-2 border-neon-blue text-neon-blue hover:bg-neon-blue hover:text-white px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105">
+                            <i class="fas fa-handshake mr-2"></i>Connect with Me
+                        </button>
+                    </div>
+                </div>
+              <!-- Profile Image -->
+<div class="fade-in flex justify-center">
+    <div class="profile-image">
+        <img src="https://i.ibb.co/5XMPTw5Z/parag.jpg" alt="Parag Sanjay Marathe" class="w-full h-full rounded-full object-cover relative z-10">
+        <div class="absolute bottom-4 right-4 bg-neon-green text-black px-3 py-1 rounded-full text-sm font-semibold">
+            Available
+        
+
+    </div>
+</div>
+                
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-tech text-4xl md:text-5xl font-bold mb-4">
+                    About <span class="gradient-text">Me</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto"></div>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+                        I'm a curious-minded BCA student (Sandip University, graduating in 2026) who lives at the crossroads of AI, cybersecurity, full-stack dev, and entrepreneurship. 🚀
+                    </p>
+                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
+                        Beyond the classroom, I wear multiple hats — Vice President of the Leads Community Club, part of the Civil Defence Tech Team, and an active Rotaract Club Member. Whether it's building projects, leading teams, or solving real-world problems, I thrive on turning ideas into impact. ✨
+                    </p>
+                    
+                    <!-- Quick Stats -->
+                    <div class="bg-white dark:bg-dark-card p-6 rounded-xl card-tilt neon-glow">
+                        <h4 class="font-tech text-xl font-bold gradient-text mb-4">Quick Stats:</h4>
+                        <div class="space-y-3 text-gray-700 dark:text-gray-300">
+                            <p>🎓 <strong>Graduation:</strong> 2026</p>
+                            <p>💻 <strong>10+ Projects Built</strong></p>
+                            <p>🌍 <strong>Community Builder & Tech Explorer</strong></p>
+                            <p>⚡ <strong>Always chasing the next big innovation</strong></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="bg-white dark:bg-dark-card p-8 rounded-2xl card-tilt neon-glow">
+                        <h3 class="font-tech text-2xl font-bold mb-6 gradient-text">Education & Roles</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <i class="fas fa-graduation-cap text-2xl text-neon-blue mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">BCA Student</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">Sandip University</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <i class="fas fa-users text-2xl text-neon-purple mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Vice President</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">Leads Community Club</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <i class="fas fa-shield-alt text-2xl text-neon-green mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Tech Team Member</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">Civil Defence</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-white dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-tech text-4xl md:text-5xl font-bold mb-4">
+                    Skills & <span class="gradient-text">Expertise</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Technical Skills -->
+                <div class="fade-in">
+                    <h3 class="font-tech text-2xl font-bold mb-8 text-center gradient-text">Technical Skills</h3>
+                    <div class="grid grid-cols-3 gap-6">
+                        <div class="text-center p-6 bg-gray-50 dark:bg-dark-card rounded-xl card-tilt neon-glow">
+                            <i class="fab fa-python text-4xl text-blue-500 skill-icon mb-3"></i>
+                            <p class="font-semibold">Python</p>
+                        </div>
+                        <div class="text-center p-6 bg-gray-50 dark:bg-dark-card rounded-xl card-tilt neon-glow">
+                            <i class="fas fa-code text-4xl text-green-500 skill-icon mb-3"></i>
+                            <p class="font-semibold">C</p>
+                        </div>
+                        <div class="text-center p-6 bg-gray-50 dark:bg-dark-card rounded-xl card-tilt neon-glow">
+                            <i class="fab fa-js-square text-4xl text-yellow-500 skill-icon mb-3"></i>
+                            <p class="font-semibold">JavaScript</p>
+                        </div>
+                        <div class="text-center p-6 bg-gray-50 dark:bg-dark-card rounded-xl card-tilt neon-glow">
+                            <i class="fas fa-brain text-4xl text-purple-500 skill-icon mb-3"></i>
+                            <p class="font-semibold">AI Tools</p>
+                        </div>
+                        <div class="text-center p-6 bg-gray-50 dark:bg-dark-card rounded-xl card-tilt neon-glow">
+                            <i class="fas fa-cube text-4xl text-indigo-500 skill-icon mb-3"></i>
+                            <p class="font-semibold">No-Code</p>
+                        </div>
+                        <div class="text-center p-6 bg-gray-50 dark:bg-dark-card rounded-xl card-tilt neon-glow">
+                            <i class="fas fa-shield-alt text-4xl text-red-500 skill-icon mb-3"></i>
+                            <p class="font-semibold">Cybersecurity</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Soft Skills -->
+                <div class="fade-in">
+                    <h3 class="font-tech text-2xl font-bold mb-8 text-center gradient-text">Soft Skills</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-6 bg-gray-50 dark:bg-dark-card rounded-xl card-tilt neon-glow">
+                            <i class="fas fa-users text-3xl text-neon-blue mr-6"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">Leadership</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Vice President, Leads Community Club</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-6 bg-gray-50 dark:bg-dark-card rounded-xl card-tilt neon-glow">
+                            <i class="fas fa-bullhorn text-3xl text-neon-purple mr-6"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">Branding</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Personal & Community Brand Development</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-6 bg-gray-50 dark:bg-dark-card rounded-xl card-tilt neon-glow">
+                            <i class="fas fa-calendar-check text-3xl text-neon-green mr-6"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">Event Management</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Organizing tech events & workshops</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-tech text-4xl md:text-5xl font-bold mb-4">
+                    Featured <span class="gradient-text">Projects</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto"></div>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="bg-white dark:bg-dark-card rounded-2xl overflow-hidden card-tilt neon-glow fade-in">
+                    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 p-6">
+                        <i class="fas fa-tint text-4xl text-white mb-4"></i>
+                        <h3 class="font-tech text-2xl font-bold text-white">JalMitra</h3>
+                        <p class="text-blue-100">Gamified Water Conservation Platform</p>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 dark:text-gray-300 mb-4">An innovative platform that gamifies water conservation efforts, encouraging users to track and reduce their water usage through interactive challenges and rewards.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">Sustainability</span>
+                            <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">Gamification</span>
+                        </div>
+                        <button class="text-neon-blue font-semibold hover:text-neon-purple transition-colors">
+                            View Project <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-dark-card rounded-2xl overflow-hidden card-tilt neon-glow fade-in">
+                    <div class="bg-gradient-to-r from-red-500 to-orange-500 p-6">
+                        <i class="fas fa-shield-alt text-4xl text-white mb-4"></i>
+                        <h3 class="font-tech text-2xl font-bold text-white">Rakshak Portal</h3>
+                        <p class="text-red-100">Civil Defence Volunteer Management</p>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 dark:text-gray-300 mb-4">A comprehensive management system for civil defence volunteers, streamlining coordination, training, and deployment during emergency situations.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-full text-sm">Emergency Response</span>
+                            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-full text-sm">Management</span>
+                        </div>
+                        <button class="text-neon-blue font-semibold hover:text-neon-purple transition-colors">
+                            View Project <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-dark-card rounded-2xl overflow-hidden card-tilt neon-glow fade-in">
+                    <div class="bg-gradient-to-r from-pink-500 to-red-500 p-6">
+                        <i class="fas fa-heart text-4xl text-white mb-4"></i>
+                        <h3 class="font-tech text-2xl font-bold text-white">JeevanDan</h3>
+                        <p class="text-pink-100">Blood Donation Platform</p>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 dark:text-gray-300 mb-4">A life-saving platform connecting blood donors with recipients, featuring real-time availability tracking and emergency notification systems.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 rounded-full text-sm">Healthcare</span>
+                            <span class="px-3 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-full text-sm">Social Impact</span>
+                        </div>
+                        <button class="text-neon-blue font-semibold hover:text-neon-purple transition-colors">
+                            View Project <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-dark-card rounded-2xl overflow-hidden card-tilt neon-glow fade-in">
+                    <div class="bg-gradient-to-r from-purple-500 to-indigo-500 p-6">
+                        <i class="fas fa-exchange-alt text-4xl text-white mb-4"></i>
+                        <h3 class="font-tech text-2xl font-bold text-white">Skill Exchange</h3>
+                        <p class="text-purple-100">Peer-to-Peer Learning Platform</p>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 dark:text-gray-300 mb-4">An innovative platform enabling students and professionals to exchange skills and knowledge through structured peer-to-peer learning sessions.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Education</span>
+                            <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm">Community</span>
+                        </div>
+                        <button class="text-neon-blue font-semibold hover:text-neon-purple transition-colors">
+                            View Project <i class="fas fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-20 bg-white dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-tech text-4xl md:text-5xl font-bold mb-4">
+                    Achievements & <span class="gradient-text">Recognition</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="text-center p-8 bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-2xl card-tilt neon-glow fade-in">
+                    <i class="fas fa-medal text-5xl text-yellow-500 mb-4"></i>
+                    <h3 class="font-tech font-semibold text-xl mb-2">National Vedic Math</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Top 10 Finalist</p>
+                </div>
+                
+                <div class="text-center p-8 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl card-tilt neon-glow fade-in">
+                    <i class="fab fa-google text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="font-tech font-semibold text-xl mb-2">Google Cloud AI</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Challenge Finalist</p>
+                </div>
+                
+                <div class="text-center p-8 bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-2xl card-tilt neon-glow fade-in">
+                    <i class="fas fa-users text-5xl text-green-500 mb-4"></i>
+                    <h3 class="font-tech font-semibold text-xl mb-2">Vice President</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Leads Community Club</p>
+                </div>
+                
+                <div class="text-center p-8 bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 rounded-2xl card-tilt neon-glow fade-in">
+                    <i class="fas fa-shield-alt text-5xl text-red-500 mb-4"></i>
+                    <h3 class="font-tech font-semibold text-xl mb-2">Tech Team Member</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Civil Defence</p>
+                </div>
+                
+                <div class="text-center p-8 bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 rounded-2xl card-tilt neon-glow fade-in">
+                    <i class="fas fa-hands-helping text-5xl text-purple-500 mb-4"></i>
+                    <h3 class="font-tech font-semibold text-xl mb-2">Active Member</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Rotaract Club</p>
+                </div>
+                
+                <div class="text-center p-8 bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 rounded-2xl card-tilt neon-glow fade-in">
+                    <i class="fas fa-certificate text-5xl text-cyan-500 mb-4"></i>
+                    <h3 class="font-tech font-semibold text-xl mb-2">Multiple Certifications</h3>
+                    <p class="text-gray-600 dark:text-gray-400">AI, IoT, Design & More</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-900 dark:bg-black text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-tech text-4xl md:text-5xl font-bold mb-4">
+                    Let's <span class="gradient-text">Connect</span>
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto mb-4"></div>
+                <p class="text-xl text-gray-300">Ready to collaborate on the next big thing?</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="fade-in">
+                    <h3 class="font-tech text-2xl font-bold mb-8 gradient-text">Get in Touch</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center p-4 bg-gray-800 rounded-lg card-tilt neon-glow">
+                            <i class="fas fa-envelope text-2xl text-neon-blue mr-4"></i>
+                            <div>
+                                <p class="font-semibold">Email</p>
+                                <a href="mailto:paragmarathe05@gmail.com" class="text-neon-blue hover:text-neon-purple transition-colors">paragmarathe05@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-4 bg-gray-800 rounded-lg card-tilt neon-glow">
+                            <i class="fab fa-linkedin text-2xl text-neon-blue mr-4"></i>
+                            <div>
+                                <p class="font-semibold">LinkedIn</p>
+                                <a href="https://linkedin.com/in/paragm05" class="text-neon-blue hover:text-neon-purple transition-colors">linkedin.com/in/paragm05</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-4 bg-gray-800 rounded-lg card-tilt neon-glow">
+                            <i class="fab fa-github text-2xl text-neon-blue mr-4"></i>
+                            <div>
+                                <p class="font-semibold">GitHub</p>
+                                <a href="https://github.com/paragm05" class="text-neon-blue hover:text-neon-purple transition-colors">github.com/paragm05</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <form class="space-y-6 bg-gray-800 p-8 rounded-2xl neon-glow">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Name</label>
+                            <input type="text" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-neon-blue focus:border-transparent text-white transition-all" placeholder="Your Name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-neon-blue focus:border-transparent text-white transition-all" placeholder="your.email@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-neon-blue focus:border-transparent text-white transition-all" placeholder="Your message..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-neon-blue to-neon-purple px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105 neon-glow">
+                            Send Message <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="font-tech text-2xl font-bold gradient-text mb-4 md:mb-0">&lt;PM/&gt;</div>
+                <div class="flex space-x-6">
+                    <a href="mailto:paragmarathe05@gmail.com" class="text-gray-400 hover:text-neon-blue transition-colors transform hover:scale-110">
+                        <i class="fas fa-envelope text-2xl"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/paragm05" class="text-gray-400 hover:text-neon-blue transition-colors transform hover:scale-110">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                    <a href="https://github.com/paragm05" class="text-gray-400 hover:text-neon-blue transition-colors transform hover:scale-110">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 Parag Sanjay Marathe | 🚀 Built with caffeine, code & crazy ideas ✨</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.classList.toggle('dark', currentTheme === 'dark');
+        themeToggle.classList.toggle('active', currentTheme === 'dark');
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            themeToggle.classList.toggle('active');
+            
+            const theme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Resume Download Functionality
+        document.getElementById('downloadResume').addEventListener('click', function() {
+            // Create a sample resume content
+            const resumeContent = `
+PARAG SANJAY MARATHE
+Tech Enthusiast | Cybersecurity Explorer | Future Entrepreneur
+
+CONTACT INFORMATION
+Email: paragmarathe05@gmail.com
+LinkedIn: linkedin.com/in/paragm05
+GitHub: github.com/paragm05
+
+EDUCATION
+Bachelor of Computer Applications (BCA)
+Sandip University | Expected Graduation: 2026
+
+LEADERSHIP ROLES
+• Vice President - Leads Community Club
+• Tech Team Member - Civil Defence
+• Active Member - Rotaract Club
+
+TECHNICAL SKILLS
+• Programming: Python, C, JavaScript
+• Technologies: AI Tools, No-Code Platforms
+• Specializations: Cybersecurity, Full-Stack Development
+
+PROJECTS
+• JalMitra - Gamified Water Conservation Platform
+• Rakshak Portal - Civil Defence Volunteer Management
+• JeevanDan - Blood Donation Platform
+• Skill Exchange - Peer-to-Peer Learning Platform
+
+ACHIEVEMENTS
+• National Vedic Math - Top 10 Finalist
+• Google Cloud AI Challenge - Finalist
+• Multiple Certifications in AI, IoT, and Design
+
+CERTIFICATIONS
+• Excel & Power BI
+• RAG Chatbot Development
+• Canva Design
+• IoT Workshop
+• SUNHACKS Hackathon Participation
+            `;
+
+            // Create and download the resume
+            const blob = new Blob([resumeContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Parag_Sanjay_Marathe_Resume.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            // Show success message
+            const button = this;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check mr-2"></i>Downloaded!';
+            button.classList.add('bg-green-500');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('bg-green-500');
+            }, 2000);
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const message = this.querySelector('textarea').value;
+            
+            if (name && email && message) {
+                // Show success message
+                const button = this.querySelector('button[type="submit"]');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-2"></i>Message Sent!';
+                button.classList.add('from-green-500', 'to-green-600');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('from-green-500', 'to-green-600');
+                    this.reset();
+                }, 3000);
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // Connect with Me button functionality
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('Connect with Me')) {
+                button.addEventListener('click', function() {
+                    document.querySelector('#contact').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+
+        // Project view buttons
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('View Project')) {
+                button.addEventListener('click', function() {
+                    const projectName = this.closest('.card-tilt').querySelector('h3').textContent;
+                    alert(`${projectName} details would open here! This would typically link to a detailed project page or GitHub repository.`);
+                });
+            }
+        });
+
+        // Add some interactive particles effect
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: linear-gradient(45deg, #00f5ff, #bf00ff);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 1000;
+                opacity: 0.7;
+            `;
+            
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = window.innerHeight + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const animation = particle.animate([
+                { transform: 'translateY(0px)', opacity: 0.7 },
+                { transform: `translateY(-${window.innerHeight + 100}px)`, opacity: 0 }
+            ], {
+                duration: Math.random() * 3000 + 2000,
+                easing: 'linear'
+            });
+            
+            animation.onfinish = () => particle.remove();
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 300);
+
+        // Add scroll progress indicator
+        const progressBar = document.createElement('div');
+        progressBar.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(45deg, #00f5ff, #bf00ff);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        `;
+        document.body.appendChild(progressBar);
+
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97d52427e080c1c2',t:'MTc1NzU3MjQ4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
